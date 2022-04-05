@@ -12,18 +12,28 @@ int	main(int argc, char **argv, char **envp)
 char	**ft_parsing_path(char **envp)
 {
 	char **paths;
+	int	i;
 
-	paths = ft_split(ft_substr(envp, )":");
+	i = 0;
+	while ((envp[i]) && (ft_strncmp(envp[i], "PATH=", 5) != 0))
+		i++;
+	envp[i] += 5;
+	paths = ft_split(envp[i], ":");
+	return (path);
+}
 
+void	ft_check_cmd(char **paths, char *cmd)
+{
+	int	i;
 
-// // retrieve the line PATH from envp
-// PATH_from_envp = ft_substr(envp ....);
-// mypaths = ft_split(PATH_from_envp, ":"); // see section 4 for a
-//                                             //small note[0]
-// mycmdargs = ft_split(ag[2], " ");
-// // in your child or parent process
+	i = 0;
+	
+}
+void child_process()
+{
 // int  i;
 // char *cmd;
+
 // i = -1;
 // while (mypaths[++i])
 // {
@@ -35,13 +45,15 @@ char	**ft_parsing_path(char **envp)
 // return (EXIT_FAILURE);
 }
 
+
+
+
 void	ft_start_pipex(int argc, char **argv, char **envp)
 {
 	t_init	*node;
 	char	**path;
 
 	path = ft_parsing_path(envp);
-
 	node = (t_init *)malloc(sizeof(t_init));
 	if (!node)
 		exit(EXIT_FAILURE);
