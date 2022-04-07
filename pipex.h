@@ -12,10 +12,14 @@
 
 typedef struct s_init
 {
-	int fd1;
-	int fd2;
-	int	fds[2][255];
-	int pids[2];
+	int		fd1;//in
+	int		fd2;//out
+	pid_t	child1;
+	pid_t	child2;
+	int		end[2];//fds
+	char	**cmd1;
+	char	**cmd2;
+	char	**paths;
 }	t_init;
 
 #endif
