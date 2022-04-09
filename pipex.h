@@ -27,7 +27,7 @@ typedef struct s_init
 }	t_init;
 
 char	**ft_parsing_path(char **envp);
-char	*ft_check_cmd(char *argv, char **paths, char **cmd_mass);
+char	*ft_check_cmd(char *argv, char **paths);
 void	ft_start_pipex(char **argv, char **envp);
 void	ft_clean_node(t_init *node, char *s);
 void	ft_error(char *s);
