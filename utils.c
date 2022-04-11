@@ -14,8 +14,8 @@ t_init	*ft_init_node(char **argv, char **envp)
 	node->paths = ft_parsing_path(envp);
 	if (!node->paths)
 		ft_clean_node(node, "error with paths");
-	node->cmd1 = ft_ckeck_cmd(argv[2], node->paths);
-	node->cmd2 = ft_ckeck_cmd(argv[3], node->paths);
+	node->cmd1 = ft_check_cmd(argv[2], node->paths);
+	node->cmd2 = ft_check_cmd(argv[3], node->paths);
 	if (!node->cmd1 || !node->cmd2)
 		ft_clean_node(node, "error with commands");
 	return (node);
@@ -27,7 +27,7 @@ void	ft_error(char *s)
 	exit(EXIT_FAILURE);
 }
 
-void	ft_claen_node(t_init *node, char *s)
+void	ft_clean_node(t_init *node, char *s)
 {
 	int	i;
 
@@ -42,22 +42,19 @@ void	ft_claen_node(t_init *node, char *s)
 			free(node->paths[i++]);
 		free(node->paths);
 	}
-	if (node->end)
-		free(node->end);
-	free(node);
-	// if (node->cmd1_mass)
-	// {
-	// 	i = 0;
-	// 	while (node->cmd1_mass[i])
-	// 		free(node->cmd1_mass[i++]);
-	// 	free(node->cmd1_mass);
-	// }
-	// if (node->cmd2_mass)
-	// {
-	// 	i = 0;
-	// 	while (node->cmd2_mass[i])
-	// 		free(node->cmd2_mass[i++]);
-	// 	free(node->cmd2_mass);
-	// }	
+	free(node);	
 	ft_error(s);
+}
+
+void	ft_free(char **str)
+{
+	unsigned int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		free(str[i]);
+		i++;
+	}
+	free(str);
 }

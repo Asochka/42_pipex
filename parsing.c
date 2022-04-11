@@ -23,18 +23,22 @@ char	**ft_parsing_path(char **envp)
 char	*ft_check_cmd(char *argv, char **paths)
 {
 	int		i;
-//	char	**raw_cmd;
+	char	**raw_cmd;
 	char	*cmd;
 
-	i = -1;
-//	cmd_mass = ft_split(argv, ' ');
-	while (paths[++i])
+	i = 0;
+	raw_cmd = ft_split(argv, ' ');
+	while (paths[i])
 	{
-    	cmd = ft_join(paths[i], (ft_split(argv, ' '))[0]);
-		if (!access(cmd, F_OK))
+    	cmd = ft_strjoin(paths[i], raw_cmd[0]);
+		if (!cmd)
+			ft_error("error: strjoin tmp");
+		if (access(cmd, X_OK) == 0)
 			return (cmd);
-		free(cmd);
-		cmd = NULL;
+		else
+			free(cmd);
+		i++;
 	}
-	return (cmd);		
+	ft_free(raw_cmd);
+	return (NULL);		
 }
