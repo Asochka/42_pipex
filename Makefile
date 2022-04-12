@@ -1,32 +1,37 @@
-NAME := pipex
+NAME			=		pipex
+SRCS 			= 		main.c utils.c parsing.c pipex.c
+OBJ 			=		$(SRCS:%.c=%.o)
+CFLAGS 			= 		-Wall -Wextra -Werror
+CC				=		gcc
 
-cc := gcc
-FLAGS := -Wall -Werror -Wextra
+ANOTHER_SRC		= 		ft_strlen.c ft_putendl_fd.c ft_strjoin.c ft_split.c 
 
-LIBFT_DIR := ./libft
-LIBFT := libft.a
+LIBFT_PATH		=		libft/
+LIBFT			=		$(LIBFT_PATH)libft.a
+LIBFT_SRC 		= 		$(addprefix ./libft/, $(ANOTHER_SRC))
+LIBFT_HEADER 	= 		./libft/libft.h
+LIBFT_OBJS 		= 		$(LIBFT_SRC:.c=.o)
+HEAD			=		pipex.h
 
-HEAD := pipex.h
-SRC := 	pipex.c main.c parsing.c utils.c
+all 			: 		$(NAME) $(LIBFT)
 
-OBJ := $(SRC:.c=.o)
+$(LIBFT)		: 		$(LIBFT_SRC) $(LIBFT_HEADER) $(LIBFT_OBJS) 
+						make -s -C $(LIBFT_PATH)
 
-INCLUDES := -I .
+$(NAME)		 	:		$(OBJ) $(LIBFT)
+						$(CC) $(CFLAGS) $(LIBFT) $(OBJ) -o $(NAME)
 
-$(NAME):	$(OBJ) $(SRC)
-			$(CC) -o $(NAME) $(OBJ) $(FLAGS) $(LIBFT_DIR)/$(LIBFT)
+%.o 			: 		%.c	Makefile $(HEAD)
+						$(CC) $(CFLAGS) -c $< -o $@
 
-.o:		.c $(HEAD) Makefile
-			$(CC) $(FLAGS) $(INCLUDES) -o $@ -c $<
+clean 			: 
+						@make -s -C $(LIBFT_PATH) clean
+						@rm -f $(OBJ)
 
-all:	$(NAME)
+fclean 			: 		clean
+						@make -s -C $(LIBFT_PATH) fclean
+						@rm -f $(NAME)
 
-clean:
-		rm -f $(OBJ)
-fclean:	clean
-		rm -f $(NAME)
+re 				: 		fclean all
 
-re:
-		fclean all
-
-.PHONY: all clean fclean re
+.PHONY			: 		all clean fclean re
