@@ -20,5 +20,6 @@ int	main(int argc, char **argv, char **envp)
 		ft_start_pipex(argv, envp, &node);
 	else
 		ft_error("error: wrong number of arguments");
+	ft_clean_node(&node, NULL);
 	return (0);
 }

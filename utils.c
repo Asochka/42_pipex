@@ -44,7 +44,8 @@ void	ft_clean_node(t_init *node, char *s)
 		free((node)->cmd2);
 	if ((node)->paths)
 		ft_free((node)->paths);
-	ft_error(s);
+	if (s)
+		ft_error(s);
 }
 
 void	ft_free(char **str)

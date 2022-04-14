@@ -4,7 +4,7 @@ OBJ 			=		$(SRCS:%.c=%.o)
 CFLAGS 			= 		-Wall -Wextra -Werror
 CC				=		gcc
 
-ANOTHER_SRC		= 		ft_strlen.c ft_putendl_fd.c ft_strjoin.c ft_split.c 
+ANOTHER_SRC		= 		ft_strlen.c ft_putendl_fd.c ft_strjoin.c ft_split.c ft_strncmp.c
 
 LIBFT_PATH		=		libft/
 LIBFT			=		$(LIBFT_PATH)libft.a
@@ -18,10 +18,10 @@ all 			: 		$(NAME) $(LIBFT)
 $(LIBFT)		: 		$(LIBFT_SRC) $(LIBFT_HEADER) $(LIBFT_OBJS) 
 						make -s -C $(LIBFT_PATH)
 
-$(NAME)		 	:		$(OBJ) $(LIBFT)
+$(NAME)		 	:		$(OBJ) $(LIBFT) 
 						$(CC) $(CFLAGS) $(LIBFT) $(OBJ) -o $(NAME)
 
-%.o 			: 		%.c	Makefile $(HEAD)
+%.o 			: 		%.c	Makefile $(HEAD) $(LIBFT_HEADER) ./libft/Makefile
 						$(CC) $(CFLAGS) -c $< -o $@
 
 clean 			: 

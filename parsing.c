@@ -16,6 +16,7 @@ char	**ft_parsing_path(char **envp)
 {
 	char	**paths;
 	int		i;
+	char	*tmp;
 
 	i = 0;
 	while ((envp[i]) && (ft_strncmp(envp[i], "PATH=", 5) != 0))
@@ -26,7 +27,9 @@ char	**ft_parsing_path(char **envp)
 	i = 0;
 	while (paths[i])
 	{
+		tmp = paths[i];
 		paths[i] = ft_strjoin(paths[i], "/");
+		free(tmp);
 		i++;
 	}
 	return (paths);
@@ -46,7 +49,10 @@ char	*ft_check_cmd(char *argv, char **paths)
 		if (!cmd)
 			ft_error("error: strjoin tmp");
 		if (access(cmd, X_OK) == 0)
+		{
+			ft_free(raw_cmd);
 			return (cmd);
+		}
 		else
 			free(cmd);
 		i++;
